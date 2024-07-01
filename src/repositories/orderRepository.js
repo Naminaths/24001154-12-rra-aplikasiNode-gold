@@ -9,16 +9,33 @@ class OrderRepository {
     return await this.Order.create(order);
   }
 
-  async findById(id) {
-    return await this.Order.findByPk(id);
+  async findAll() {
+    return await this.Order.findAll();
   }
 
-  async updateStatus(id, status) {
-    const order = await this.findById(id);
-    if (order) {
-      order.status = status;
-      await order.save();
+  async findById(id) {
+    const order = await this.Order.findByPk(id);
+    if (!order) {
+      throw new Error('Order not found');
     }
+    return order;
+  }
+
+  async update(id, orderData) {
+    const order = await this.Order.findByPk(id);
+    if (!order) {
+      throw new Error('Order not found');
+    }
+    await order.update(orderData);
+    return order;
+  }
+
+  async delete(id) {
+    const order = await this.Order.findByPk(id);
+    if (!order) {
+      throw new Error('Order not found');
+    }
+    await order.destroy();
     return order;
   }
 }

@@ -17,6 +17,8 @@ Order.belongsTo(User, { foreignKey: 'userId' });
 Item.hasMany(Order, { foreignKey: 'itemId' });
 Order.belongsTo(Item, { foreignKey: 'itemId' });
 
+sequelize.sync();
+
 module.exports = {
   sequelize,
   User,
